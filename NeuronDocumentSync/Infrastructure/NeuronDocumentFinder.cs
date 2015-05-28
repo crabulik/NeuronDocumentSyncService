@@ -44,7 +44,7 @@ namespace NeuronDocumentSync.Infrastructure
                     {
                         if (_cancellationToken.IsCancellationRequested)
                         {
-                            _logger.Log("Find operation canceled");
+                            _logger.AddLog("Find operation canceled");
                             return result;
                         }
 

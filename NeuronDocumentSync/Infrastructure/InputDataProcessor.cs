@@ -30,7 +30,7 @@ namespace NeuronDocumentSync.Infrastructure
             {
                 if (_cancellationToken.IsCancellationRequested)
                 {
-                    _logger.Log("Input Data Processor operation canceled");
+                    _logger.AddLog("Input Data Processor operation canceled");
                     return result;
                 }
 

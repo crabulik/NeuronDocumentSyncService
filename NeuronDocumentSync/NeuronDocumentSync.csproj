@@ -34,6 +34,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\FirebirdSql.Data.FirebirdClient.4.6.2.0\lib\net45\FirebirdSql.Data.FirebirdClient.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -45,6 +48,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\ExportDocumentsType.cs" />
+    <Compile Include="Enums\LoggerType.cs" />
+    <Compile Include="Enums\SyncCoreStatus.cs" />
     <Compile Include="FbData\DocumentsFields.cs" />
     <Compile Include="FbData\FbScripts.cs" />
     <Compile Include="FirebirdFacade\CommonFbConstants.cs" />
@@ -52,19 +57,33 @@
     <Compile Include="FirebirdFacade\FbEventer.cs" />
     <Compile Include="FirebirdFacade\FbFacade.cs" />
     <Compile Include="Infrastructure\InputDataProcessor.cs" />
+    <Compile Include="Infrastructure\Logger.cs" />
     <Compile Include="Infrastructure\NeuronDocumentFinder.cs" />
+    <Compile Include="Infrastructure\SyncCore.cs" />
+    <Compile Include="Interfaces\IGeneralConfig.cs" />
     <Compile Include="Interfaces\INeuronLogger.cs" />
+    <Compile Include="Interfaces\ISyncCore.cs" />
     <Compile Include="Models\ExportServiceDocument.cs" />
     <Compile Include="Models\FbDbConnectionConfig.cs" />
     <Compile Include="Models\GeneralConfig.cs" />
     <Compile Include="Models\NeuronDocument.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\MainMessages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MainMessages.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\MainMessages.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MainMessages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
