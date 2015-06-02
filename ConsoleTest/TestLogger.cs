@@ -3,7 +3,7 @@ using NeuronDocumentSync.Interfaces;
 
 namespace ConsoleTest
 {
-    class TestLogger: INeuronLogger
+    class TestLogger
     {
         public void Log(string message)
         {

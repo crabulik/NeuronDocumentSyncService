@@ -39,6 +39,7 @@
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
@@ -50,12 +51,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cfg\FbDbConfigSection.cs" />
+    <Compile Include="Cfg\GeneralConfigSection.cs" />
     <Compile Include="DocumentSyncService.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="DocumentSyncService.Designer.cs">
       <DependentUpon>DocumentSyncService.cs</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\ConfigProcessor.cs" />
     <Compile Include="IServiceManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectInstaller.cs">
@@ -69,7 +73,9 @@
     <Compile Include="SyncServiceBindings.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

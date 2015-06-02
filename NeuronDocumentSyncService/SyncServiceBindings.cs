@@ -2,6 +2,7 @@
 using NeuronDocumentSync.Infrastructure;
 using NeuronDocumentSync.Interfaces;
 using NeuronDocumentSync.Models;
+using NeuronDocumentSyncService.Infrastructure;
 using Ninject.Modules;
 
 namespace NeuronDocumentSyncService
@@ -10,13 +11,13 @@ namespace NeuronDocumentSyncService
     {
         public override void Load()
         {
-            var genConfig = new GeneralConfig();
-
-            Bind<IGeneralConfig>().ToConstant(genConfig);
+            Bind<IGeneralConfig>().To<GeneralConfig>().InSingletonScope();
             Bind<INeuronLogger>().To<Logger>().InSingletonScope();
             Bind<ServiceBase>().To<DocumentSyncService>().InSingletonScope();
             Bind<IServiceManager>().To<ServiceManager>();
             Bind<ISyncCore>().To<SyncCore>();
+            Bind<IConfigProcessor>().To<ConfigProcessor>().InSingletonScope();
+            Bind<FbDbConnectionConfig>().ToSelf();
         }
     }
 }

@@ -4,5 +4,9 @@
     {
         string TempDirectoryPath { get; set; }
         string AppDirectoryPath { get; }
+
+        void Load();
+
+        bool Save();
     }
 }

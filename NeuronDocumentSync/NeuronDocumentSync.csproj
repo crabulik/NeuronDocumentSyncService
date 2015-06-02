@@ -60,6 +60,7 @@
     <Compile Include="Infrastructure\Logger.cs" />
     <Compile Include="Infrastructure\NeuronDocumentFinder.cs" />
     <Compile Include="Infrastructure\SyncCore.cs" />
+    <Compile Include="Interfaces\IConfigProcessor.cs" />
     <Compile Include="Interfaces\IGeneralConfig.cs" />
     <Compile Include="Interfaces\INeuronLogger.cs" />
     <Compile Include="Interfaces\ISyncCore.cs" />
@@ -83,6 +84,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>MainMessages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Infrastructure\Processors\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

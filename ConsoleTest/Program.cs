@@ -19,7 +19,7 @@ namespace ConsoleTest
                 {
                     DbFilePath = @"C:\Neuron\Database\DOCUMENTDELIVERY.FDB"
                 }, 
-                new CancellationToken(), new TestLogger());
+                new CancellationToken(), null);
             finder.Execute();
             Console.ReadLine();
         }

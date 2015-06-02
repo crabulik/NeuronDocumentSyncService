@@ -1,11 +1,14 @@
 ﻿using FirebirdSql.Data.FirebirdClient;
+using NeuronDocumentSync.Interfaces;
 
 namespace NeuronDocumentSync.Models
 {
     public class FbDbConnectionConfig
     {
-        public FbDbConnectionConfig()
+        private readonly IConfigProcessor _cfgProcessor;
+        public FbDbConnectionConfig(IConfigProcessor cfgProcessor)
         {
+            _cfgProcessor = cfgProcessor;
             Charset = "UTF8";
             UserName = "SYSDBA";
             Password = "masterkey";
@@ -38,6 +41,16 @@ namespace NeuronDocumentSync.Models
 
 
             return builder.ToString();
+        }
+
+        public void Load()
+        {
+            _cfgProcessor.LoadFbDbConnectionConfig(this);
+        }
+
+        public bool Save()
+        {
+            return _cfgProcessor.SaveFbDbConnectionConfig(this);
         }
     }
 }
