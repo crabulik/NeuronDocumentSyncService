@@ -7,6 +7,7 @@ namespace NeuronDocumentSync.Models
     {
         private readonly string _commonAppDirectory;
         private readonly IConfigProcessor _cfgProcessor;
+        private const int DefaultBreakMinutesValue = 10;
 
         public GeneralConfig(IConfigProcessor cfgProcessor)
         {
@@ -15,10 +16,19 @@ namespace NeuronDocumentSync.Models
                     Environment.SpecialFolder.CommonApplicationData) + @"\NeuronDocumentSync\";
             TempDirectoryPath = 
                  _commonAppDirectory;
+            IsServiceTimeEnable = false;
+            ServiceTimeStart = new TimeSpan(0);
+            ServiceTimeEnd = ServiceTimeStart;
+            SyncOperationBreakValue = 1000 * 60 * DefaultBreakMinutesValue;
         }
         public string TempDirectoryPath { get; set; }
         public string AppDirectoryPath {
             get { return _commonAppDirectory; }}
+
+        public int SyncOperationBreakValue { get; set; }
+        public bool IsServiceTimeEnable { get; set; }
+        public TimeSpan ServiceTimeStart { get; set; }
+        public TimeSpan ServiceTimeEnd { get; set; }
 
         public void Load()
         {

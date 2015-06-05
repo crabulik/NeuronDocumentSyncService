@@ -13,7 +13,7 @@ namespace ConsoleTest
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Test Started");
+            /*Console.WriteLine("Test Started");
             var finder = new NeuronDocumentFinder(
                 new FbDbConnectionConfig
                 {
@@ -21,7 +21,7 @@ namespace ConsoleTest
                 }, 
                 new CancellationToken(), null);
             finder.Execute();
-            Console.ReadLine();
+            Console.ReadLine();*/
         }
     }
 }

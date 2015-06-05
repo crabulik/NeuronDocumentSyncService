@@ -115,6 +115,24 @@ namespace NeuronDocumentSync.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Can not read FbDb Section from the main configuration file..
+        /// </summary>
+        public static string rs_CantReadFbDbConfigSection {
+            get {
+                return ResourceManager.GetString("rs_CantReadFbDbConfigSection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Can not read General Section from the main configuration file..
+        /// </summary>
+        public static string rs_CantReadGeneralConfigSection {
+            get {
+                return ResourceManager.GetString("rs_CantReadGeneralConfigSection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current service may executed with such parameters:.
         /// </summary>
         public static string rs_CommansInfo {
@@ -169,11 +187,11 @@ namespace NeuronDocumentSync.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The server is not started. The service will be stopped.
+        ///   Looks up a localized string similar to The server has an enternal error. The service will be stopped.
         /// </summary>
-        public static string rs_ServerNotStartedServiceWillBeStopped {
+        public static string rs_ServerErrorServiceWillBeStopped {
             get {
-                return ResourceManager.GetString("rs_ServerNotStartedServiceWillBeStopped", resourceCulture);
+                return ResourceManager.GetString("rs_ServerErrorServiceWillBeStopped", resourceCulture);
             }
         }
         
@@ -192,6 +210,53 @@ namespace NeuronDocumentSync.Resources {
         public static string rs_ServiceStartedAsConsoleApplication {
             get {
                 return ResourceManager.GetString("rs_ServiceStartedAsConsoleApplication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ServiceTimeEnd Error value.
+        /// </summary>
+        public static string rs_ServiceTimeEndErrorValue {
+            get {
+                return ResourceManager.GetString("rs_ServiceTimeEndErrorValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ServiceTimeStart Error value.
+        /// </summary>
+        public static string rs_ServiceTimeStartErrorValue {
+            get {
+                return ResourceManager.GetString("rs_ServiceTimeStartErrorValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to It&apos;s impossible to start main worker. 
+        ///The worker is still busy..
+        /// </summary>
+        public static string rs_SyncCoreStartWhileBusy {
+            get {
+                return ResourceManager.GetString("rs_SyncCoreStartWhileBusy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to It&apos;s impossible to start main worker. 
+        ///The InternalError is found..
+        /// </summary>
+        public static string rs_SyncCoreStartWithInternalError {
+            get {
+                return ResourceManager.GetString("rs_SyncCoreStartWithInternalError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SyncCore didn&apos;t stop main worker thread..
+        /// </summary>
+        public static string rs_SyncCoreWorkerDidntStop {
+            get {
+                return ResourceManager.GetString("rs_SyncCoreWorkerDidntStop", resourceCulture);
             }
         }
     }

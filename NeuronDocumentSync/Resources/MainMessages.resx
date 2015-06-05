@@ -135,6 +135,12 @@
   <data name="rs_CanNotUninstallService" xml:space="preserve">
     <value>Can not uninstall the service</value>
   </data>
+  <data name="rs_CantReadFbDbConfigSection" xml:space="preserve">
+    <value>Can not read FbDb Section from the main configuration file.</value>
+  </data>
+  <data name="rs_CantReadGeneralConfigSection" xml:space="preserve">
+    <value>Can not read General Section from the main configuration file.</value>
+  </data>
   <data name="rs_CommansInfo" xml:space="preserve">
     <value>Current service may executed with such parameters:</value>
   </data>
@@ -153,13 +159,30 @@
   <data name="rs_PressEnterToStop" xml:space="preserve">
     <value>Press Enter to stop</value>
   </data>
-  <data name="rs_ServerNotStartedServiceWillBeStopped" xml:space="preserve">
-    <value>The server is not started. The service will be stopped</value>
+  <data name="rs_ServerErrorServiceWillBeStopped" xml:space="preserve">
+    <value>The server has an enternal error. The service will be stopped</value>
   </data>
   <data name="rs_ServiceInstallationWasRolledBack" xml:space="preserve">
     <value>The service installation was rolled back</value>
   </data>
   <data name="rs_ServiceStartedAsConsoleApplication" xml:space="preserve">
     <value>The service is started as console application</value>
+  </data>
+  <data name="rs_ServiceTimeEndErrorValue" xml:space="preserve">
+    <value>ServiceTimeEnd Error value</value>
+  </data>
+  <data name="rs_ServiceTimeStartErrorValue" xml:space="preserve">
+    <value>ServiceTimeStart Error value</value>
+  </data>
+  <data name="rs_SyncCoreStartWhileBusy" xml:space="preserve">
+    <value>It's impossible to start main worker. 
+The worker is still busy.</value>
+  </data>
+  <data name="rs_SyncCoreStartWithInternalError" xml:space="preserve">
+    <value>It's impossible to start main worker. 
+The InternalError is found.</value>
+  </data>
+  <data name="rs_SyncCoreWorkerDidntStop" xml:space="preserve">
+    <value>SyncCore didn't stop main worker thread.</value>
   </data>
 </root>

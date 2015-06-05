@@ -11,8 +11,8 @@ namespace NeuronDocumentSyncService
     {
         public override void Load()
         {
-            Bind<IGeneralConfig>().To<GeneralConfig>().InSingletonScope();
             Bind<INeuronLogger>().To<Logger>().InSingletonScope();
+            Bind<IGeneralConfig>().To<GeneralConfig>().InSingletonScope();           
             Bind<ServiceBase>().To<DocumentSyncService>().InSingletonScope();
             Bind<IServiceManager>().To<ServiceManager>();
             Bind<ISyncCore>().To<SyncCore>();

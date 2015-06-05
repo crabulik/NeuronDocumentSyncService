@@ -11,13 +11,14 @@ namespace NeuronDocumentSync.Infrastructure
     {
         
 
-        public Logger(IGeneralConfig generalConfig)
+        public Logger()
         {
-            _generalConfig = generalConfig;
+            _appDirectoryPath = Environment.GetFolderPath(
+                Environment.SpecialFolder.CommonApplicationData) + @"\NeuronDocumentSync\";
         }
 
         private const string _logName = "Application";
-        private readonly IGeneralConfig _generalConfig;
+        private readonly string _appDirectoryPath;
         private string _logSourceName = "NeuronDocumentSyncService";
         private string _logFileExtension = ".log";
         private LoggerType _logType = LoggerType.File;
@@ -28,7 +29,7 @@ namespace NeuronDocumentSync.Infrastructure
         }
         private string logFile
         {
-            get { return Path.Combine(_generalConfig.AppDirectoryPath, logFileName); }
+            get { return Path.Combine(_appDirectoryPath, logFileName); }
         }
 
         public LoggerType LogType

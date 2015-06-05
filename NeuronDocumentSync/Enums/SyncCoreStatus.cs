@@ -3,6 +3,9 @@
     public enum SyncCoreStatus
     {
         Stopped,
-        Started
+        Started,
+        SyncStep,
+        BreakUp,
+        Error
     }
 }

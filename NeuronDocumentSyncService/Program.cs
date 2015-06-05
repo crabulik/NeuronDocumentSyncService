@@ -111,9 +111,9 @@ namespace NeuronDocumentSyncService
                 ExitCode = -1;
             }
 
-            if (syncCore.GetStatus() != SyncCoreStatus.Started)
+            if (syncCore.GetStatus() == SyncCoreStatus.Error)
             {
-                logger.AddLog(MainMessages.rs_ServerNotStartedServiceWillBeStopped);
+                logger.AddLog(MainMessages.rs_ServerErrorServiceWillBeStopped);
                 ExitCode = -1;
 
                 try
