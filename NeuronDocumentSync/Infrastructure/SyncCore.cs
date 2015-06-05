@@ -18,7 +18,7 @@ namespace NeuronDocumentSync.Infrastructure
         private object cfgLocker = new object();
 
         private BackgroundWorker _worker;
-        public SyncCore(INeuronLogger logger, IGeneralConfig cfg)
+        public SyncCore(INeuronLogger logger)
         {
             _logger = logger;
 
@@ -119,7 +119,7 @@ namespace NeuronDocumentSync.Infrastructure
 
         private SyncCoreStatus _status = SyncCoreStatus.Stopped;
 
-        public void SetStatus(SyncCoreStatus status)
+        private void SetStatus(SyncCoreStatus status)
         {
             _status = status;
             OnStatusChanged();
