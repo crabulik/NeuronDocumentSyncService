@@ -40,6 +40,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -68,6 +69,7 @@
     <Compile Include="Models\FbDbConnectionConfig.cs" />
     <Compile Include="Models\GeneralConfig.cs" />
     <Compile Include="Models\NeuronDocument.cs" />
+    <Compile Include="Models\ServiceStatusInfoArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\MainMessages.Designer.cs">
       <AutoGen>True</AutoGen>

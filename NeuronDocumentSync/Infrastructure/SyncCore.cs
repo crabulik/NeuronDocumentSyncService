@@ -13,6 +13,7 @@ namespace NeuronDocumentSync.Infrastructure
     {
         private bool _isInternalError = false;
         private readonly INeuronLogger _logger;
+        private string _lastStatusErrorInfo;
 
         private object cfgLocker = new object();
 
@@ -39,12 +40,12 @@ namespace NeuronDocumentSync.Infrastructure
 
         private void SyncNeuronDocuments()
         {
-            _status = SyncCoreStatus.SyncStep;
+            SetStatus(SyncCoreStatus.SyncStep);
         }
 
         private void WorkerOnDoWork(object sender, DoWorkEventArgs doWorkEventArgs)
         {
-            _status = SyncCoreStatus.Started;
+            SetStatus(SyncCoreStatus.Started);
             while (true)
             {
                 if (CheckServiceTime())
@@ -57,7 +58,7 @@ namespace NeuronDocumentSync.Infrastructure
                 if (_worker.CancellationPending) break;
             }
 
-            _status = SyncCoreStatus.Stopped;
+            SetStatus(SyncCoreStatus.Stopped);
         }
 
         private void WorkerOnRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs runWorkerCompletedEventArgs)
@@ -67,7 +68,7 @@ namespace NeuronDocumentSync.Infrastructure
 
         private void EngageBrake()
         {
-            _status = SyncCoreStatus.BreakUp;
+            SetStatus(SyncCoreStatus.BreakUp);
 
             int spendedMs = 0;
             int tmpSyncOperationBreakValue = _syncOperationBreakValue;                
@@ -114,13 +115,57 @@ namespace NeuronDocumentSync.Infrastructure
         #endregion
 
 
-        private SyncCoreStatus _status = SyncCoreStatus.Stopped;     
+        #region Status
+
+        private SyncCoreStatus _status = SyncCoreStatus.Stopped;
+
+        public void SetStatus(SyncCoreStatus status)
+        {
+            _status = status;
+            OnStatusChanged();
+        }
+
         public SyncCoreStatus GetStatus()
         {
             if (_isInternalError)
                 return SyncCoreStatus.Error;
             return _status;
         }
+
+        private void OnStatusChanged(int documentCount = -1, int documentNumber = -1, string documentInfo = "")
+        {
+            var state = GetStatus();
+            ServiceStatusInfoArgs info;
+            switch (state)
+            {
+                case SyncCoreStatus.SyncStep:
+                    info = new ServiceStatusInfoArgs(state, string.Empty,
+                        documentCount, documentNumber, documentInfo);
+                    break;
+                case SyncCoreStatus.Stopped:
+                case SyncCoreStatus.Started:           
+                case SyncCoreStatus.BreakUp:
+                    info = new ServiceStatusInfoArgs(state);
+                    break;
+                case SyncCoreStatus.Error:
+                    info = new ServiceStatusInfoArgs(state, _lastStatusErrorInfo);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            if (StausChanged != null)
+            {
+                var delegat = StausChanged;
+                delegat(this, info);
+            }
+
+        }
+        
+        public event EventHandler<ServiceStatusInfoArgs> StausChanged; 
+
+        #endregion
+
         public void OnStart(string[] args)
         {          
 
