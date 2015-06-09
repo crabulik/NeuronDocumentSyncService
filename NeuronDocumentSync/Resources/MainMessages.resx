@@ -147,6 +147,12 @@
   <data name="rs_ErrorOccurred" xml:space="preserve">
     <value>Error occurred</value>
   </data>
+  <data name="rs_ErrorsInRepository" xml:space="preserve">
+    <value>Found errors in the work with DB</value>
+  </data>
+  <data name="rs_ErrorsInRepositoryGetUnhandledDocumentsInfo" xml:space="preserve">
+    <value>NeuronRepository Exception in GetUnhandledDocumentsInfo</value>
+  </data>
   <data name="rs_ErrorWhileChangingServiceFailureActions" xml:space="preserve">
     <value>Error while changing the service failure actions</value>
   </data>
@@ -174,6 +180,12 @@
   <data name="rs_ServiceTimeStartErrorValue" xml:space="preserve">
     <value>ServiceTimeStart Error value</value>
   </data>
+  <data name="rs_SomeProblemsWithConvertToPdf" xml:space="preserve">
+    <value>Found some problems with converting Doc file to PDF.</value>
+  </data>
+  <data name="rs_SomeProblemsWithImageFile" xml:space="preserve">
+    <value>Found some problems with the Image File.</value>
+  </data>
   <data name="rs_SyncCoreStartWhileBusy" xml:space="preserve">
     <value>It's impossible to start main worker. 
 The worker is still busy.</value>
@@ -184,5 +196,14 @@ The InternalError is found.</value>
   </data>
   <data name="rs_SyncCoreWorkerDidntStop" xml:space="preserve">
     <value>SyncCore didn't stop main worker thread.</value>
+  </data>
+  <data name="rs_SyncNeuronDocumentsCanceled" xml:space="preserve">
+    <value>Syncronization Process is canceled by user</value>
+  </data>
+  <data name="rs_SyncNeuronDocumentWasNotFilled" xml:space="preserve">
+    <value>The document "{0}({1}) Id = {2}" was not filled with all data</value>
+  </data>
+  <data name="rs_SyncNeuronDocumentWasNotProcessed" xml:space="preserve">
+    <value>The document "{0}({1}) Id = {2}" was not processed by the service</value>
   </data>
 </root>

@@ -151,6 +151,24 @@ namespace NeuronDocumentSync.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Found errors in the work with DB.
+        /// </summary>
+        public static string rs_ErrorsInRepository {
+            get {
+                return ResourceManager.GetString("rs_ErrorsInRepository", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NeuronRepository Exception in GetUnhandledDocumentsInfo.
+        /// </summary>
+        public static string rs_ErrorsInRepositoryGetUnhandledDocumentsInfo {
+            get {
+                return ResourceManager.GetString("rs_ErrorsInRepositoryGetUnhandledDocumentsInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error while changing the service failure actions.
         /// </summary>
         public static string rs_ErrorWhileChangingServiceFailureActions {
@@ -232,6 +250,24 @@ namespace NeuronDocumentSync.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Found some problems with converting Doc file to PDF..
+        /// </summary>
+        public static string rs_SomeProblemsWithConvertToPdf {
+            get {
+                return ResourceManager.GetString("rs_SomeProblemsWithConvertToPdf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Found some problems with the Image File..
+        /// </summary>
+        public static string rs_SomeProblemsWithImageFile {
+            get {
+                return ResourceManager.GetString("rs_SomeProblemsWithImageFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to It&apos;s impossible to start main worker. 
         ///The worker is still busy..
         /// </summary>
@@ -257,6 +293,33 @@ namespace NeuronDocumentSync.Resources {
         public static string rs_SyncCoreWorkerDidntStop {
             get {
                 return ResourceManager.GetString("rs_SyncCoreWorkerDidntStop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Syncronization Process is canceled by user.
+        /// </summary>
+        public static string rs_SyncNeuronDocumentsCanceled {
+            get {
+                return ResourceManager.GetString("rs_SyncNeuronDocumentsCanceled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The document &quot;{0}({1}) Id = {2}&quot; was not filled with all data.
+        /// </summary>
+        public static string rs_SyncNeuronDocumentWasNotFilled {
+            get {
+                return ResourceManager.GetString("rs_SyncNeuronDocumentWasNotFilled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The document &quot;{0}({1}) Id = {2}&quot; was not processed by the service.
+        /// </summary>
+        public static string rs_SyncNeuronDocumentWasNotProcessed {
+            get {
+                return ResourceManager.GetString("rs_SyncNeuronDocumentWasNotProcessed", resourceCulture);
             }
         }
     }

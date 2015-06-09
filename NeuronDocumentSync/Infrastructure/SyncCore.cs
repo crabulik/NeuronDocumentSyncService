@@ -13,14 +13,18 @@ namespace NeuronDocumentSync.Infrastructure
     {
         private bool _isInternalError = false;
         private readonly INeuronLogger _logger;
+        private readonly NeuronRepository _repository;
+        private readonly INeuronDocumentProcessor _processor;
         private string _lastStatusErrorInfo;
 
         private object cfgLocker = new object();
 
         private BackgroundWorker _worker;
-        public SyncCore(INeuronLogger logger)
+        public SyncCore(INeuronLogger logger, NeuronRepository repository, INeuronDocumentProcessor processor)
         {
             _logger = logger;
+            _repository = repository;
+            _processor = processor;
 
             InitializeWorker();
         }
@@ -41,6 +45,34 @@ namespace NeuronDocumentSync.Infrastructure
         private void SyncNeuronDocuments()
         {
             SetStatus(SyncCoreStatus.SyncStep);
+
+            var list = _repository.GetUnhandledDocumentsInfo();
+
+            foreach (var document in list)
+            {
+                if (_worker.CancellationPending)
+                {
+                    _logger.AddLog(MainMessages.rs_SyncNeuronDocumentsCanceled);
+                    return;
+                }
+                if (_repository.FillDocumentData(document))
+                {
+                    if (_processor.ProcessDocument(document))
+                    {
+                        _repository.SetDocumentHandled(document);
+                    }
+                    else
+                    {
+                        _logger.AddLog(string.Format(MainMessages.rs_SyncNeuronDocumentWasNotProcessed,
+                        document.Name, document.CreatDate, document.ID));
+                    }
+                }
+                else
+                {
+                    _logger.AddLog(string.Format(MainMessages.rs_SyncNeuronDocumentWasNotFilled,
+                        document.Name, document.CreatDate, document.ID));
+                }
+            }
         }
 
         private void WorkerOnDoWork(object sender, DoWorkEventArgs doWorkEventArgs)

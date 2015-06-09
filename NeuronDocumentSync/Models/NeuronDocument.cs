@@ -20,6 +20,7 @@ namespace NeuronDocumentSync.Models
         public byte[] DocumentData { get; set; }
 
         public byte[] DocumentAdditionalData { get; set; }
-        
+
+        public string Errors { get; set; }
     }
 }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using NeuronDocumentSync.Enums;
 using NeuronDocumentSync.Infrastructure;
 using NeuronDocumentSync.Interfaces;
+using NeuronDocumentSync.Models;
 using NeuronDocumentSync.Resources;
 using Ninject;
 using Ninject.Parameters;
@@ -21,6 +22,11 @@ namespace NeuronDocumentSyncService
         {
             var kernel = new StandardKernel(new SyncServiceBindings());
             var logger = kernel.Get<INeuronLogger>();
+            var dbConfig = kernel.Get<FbDbConnectionConfig>();
+            dbConfig.Load();
+            var config = kernel.Get<IGeneralConfig>();
+            config.Load();
+            dbConfig.Load();
             try
             {
                 ServiceManagerCommand serviceCommand;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using NeuronDocumentSync.Interfaces;
 
 namespace NeuronDocumentSync.Models
@@ -14,6 +15,19 @@ namespace NeuronDocumentSync.Models
             _cfgProcessor = cfgProcessor;
             _commonAppDirectory = Environment.GetFolderPath(
                     Environment.SpecialFolder.CommonApplicationData) + @"\NeuronDocumentSync\";
+            try
+            {
+                if (!Directory.Exists(_commonAppDirectory))
+                {
+                    Directory.CreateDirectory(_commonAppDirectory);
+                }
+            }
+            catch (Exception)
+            {
+                _commonAppDirectory = Directory.GetCurrentDirectory();
+            }
+            
+
             TempDirectoryPath = 
                  _commonAppDirectory;
             IsServiceTimeEnable = false;

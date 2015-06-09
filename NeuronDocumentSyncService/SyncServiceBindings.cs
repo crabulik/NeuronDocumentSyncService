@@ -1,5 +1,6 @@
 ﻿using System.ServiceProcess;
 using NeuronDocumentSync.Infrastructure;
+using NeuronDocumentSync.Infrastructure.Processors;
 using NeuronDocumentSync.Interfaces;
 using NeuronDocumentSync.Models;
 using NeuronDocumentSyncService.Infrastructure;
@@ -17,7 +18,10 @@ namespace NeuronDocumentSyncService
             Bind<IServiceManager>().To<ServiceManager>();
             Bind<ISyncCore>().To<SyncCore>();
             Bind<IConfigProcessor>().To<ConfigProcessor>().InSingletonScope();
-            Bind<FbDbConnectionConfig>().ToSelf();
+            Bind<FbDbConnectionConfig>().ToSelf().InSingletonScope();
+            Bind<INeuronDocumentProcessor>().To<TestDocumentProcessor>();
+            Bind<NeuronRepository>().ToSelf();
+            Bind<DocumentConverter>().ToSelf().InSingletonScope();
         }
     }
 }
