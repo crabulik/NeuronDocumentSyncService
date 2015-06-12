@@ -47,6 +47,11 @@ namespace NeuronDocumentSync.FbData
                 ADDITIONAL_DATA = NULL
             WHERE (ID = @PNr)
         ";
+        public const string SetUnhandlable = @"
+            UPDATE DOCUMENTS
+            SET STATUS = 3
+            WHERE (ID = @PNr)
+        ";
 
         public const string DeleteDocument = @"
             EXECUTE BLOCK

@@ -15,6 +15,8 @@ namespace NeuronDocumentSync.Interfaces
 
         TimeSpan ServiceTimeEnd { get; set; }
 
+        string WebImportUrl { get; set; }
+
         void Load();
 
         bool Save();

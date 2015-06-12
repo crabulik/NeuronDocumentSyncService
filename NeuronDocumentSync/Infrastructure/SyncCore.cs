@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
 using System.Threading;
 using NeuronDocumentSync.Enums;
+using NeuronDocumentSync.Infrastructure.Processors;
 using NeuronDocumentSync.Interfaces;
 using NeuronDocumentSync.Models;
 using NeuronDocumentSync.Resources;
@@ -57,22 +61,80 @@ namespace NeuronDocumentSync.Infrastructure
                 }
                 if (_repository.FillDocumentData(document))
                 {
-                    if (_processor.ProcessDocument(document))
+                    if (ValidateDocument(document))
                     {
-                        _repository.SetDocumentHandled(document);
+
+                        #region Processing document
+
+                        switch (_processor.ProcessDocument(document))
+                        {
+                            case NeuronDocumentProcessorResult.Success:
+                                _repository.SetDocumentHandled(document);
+                                break;
+                            case NeuronDocumentProcessorResult.Fail:
+                            {
+                                _logger.AddLog(string.Format(MainMessages.rs_SyncNeuronDocumentWasNotProcessed,
+                                    document.Name, document.CreatDate, document.ID));
+                                _repository.LogDocumentError(document);
+                                break;
+                            }
+                            case NeuronDocumentProcessorResult.Error:
+                            {
+                                _logger.AddLog(string.Format(MainMessages.rs_SyncNeuronDocumentGlobalError,
+                                    document.Name, document.CreatDate, document.ID));
+                                _repository.LogDocumentError(document);
+                                return;
+                            }
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+
+                        #endregion
                     }
+
                     else
                     {
-                        _logger.AddLog(string.Format(MainMessages.rs_SyncNeuronDocumentWasNotProcessed,
-                        document.Name, document.CreatDate, document.ID));
+                        
+                        _logger.AddLog(string.Format(MainMessages.rs_ValidationModelErrorsLog,
+                                    document.Name, document.CreatDate, document.ID, document.Errors));
+                        _repository.SetDocumentUnhandleable(document);
                     }
+
                 }
                 else
                 {
                     _logger.AddLog(string.Format(MainMessages.rs_SyncNeuronDocumentWasNotFilled,
-                        document.Name, document.CreatDate, document.ID));
+                            document.Name, document.CreatDate, document.ID));                    
                 }
             }
+        }
+
+        private bool ValidateDocument(NeuronDocument document)
+        {
+            var context = new ValidationContext(document, null, null);
+            var results = new List<ValidationResult>();
+            
+            bool valid = Validator.TryValidateObject(document, context, results, true);
+            if ((document.DeliveryPhone == string.Empty) && (document.DeliveryEMail == string.Empty))
+            {
+                results.Add(new ValidationResult(MainMessages.rs_DocumantDoesntHaveAnyDeliveryInformation));
+            }
+
+            if ((document.DocumentData == null) && (document.DocumentAdditionalData == null))
+            {
+                results.Add(new ValidationResult(MainMessages.rs_DocumentHasNoData));
+            }
+
+            if (results.Count > 0)
+            {
+                var sb = new StringBuilder(MainMessages.rs_ValidationModelErrors);
+                foreach (var result in results)
+                {
+                    sb.AppendLine(result.ErrorMessage);
+                }
+                document.Errors = sb.ToString();
+            }
+            return valid && (results.Count == 0);
         }
 
         private void WorkerOnDoWork(object sender, DoWorkEventArgs doWorkEventArgs)

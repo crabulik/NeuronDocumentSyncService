@@ -37,6 +37,7 @@ namespace NeuronDocumentSync.Infrastructure
                     {
                         var idOrdinal = reader.GetOrdinal(DocumentsFields.Id);
                         var nameOrdinal = reader.GetOrdinal(DocumentsFields.Name);
+                        var fileNameOrdinal = reader.GetOrdinal(DocumentsFields.FileName);
                         var mailOrdinal = reader.GetOrdinal(DocumentsFields.Mail);
                         var phoneOrdinal = reader.GetOrdinal(DocumentsFields.Phone);
                         var createDateOrdinal = reader.GetOrdinal(DocumentsFields.CreateDate);
@@ -49,6 +50,7 @@ namespace NeuronDocumentSync.Infrastructure
                                 ID = reader.GetInt32(idOrdinal),
                                 Name = reader.GetString(nameOrdinal),
                                 DeliveryEMail = reader.GetString(mailOrdinal),
+                                FileName = reader.GetString(fileNameOrdinal),
                                 DeliveryPhone = reader.GetString(phoneOrdinal),
                                 CreatDate = reader.GetDateTime(createDateOrdinal),
                                 DocumentType = Enum.IsDefined(typeof(ExportDocumentsType), reader.GetValue(docTypeOrdinal))
@@ -115,6 +117,34 @@ namespace NeuronDocumentSync.Infrastructure
                             facade.Parameters.Clear();
                             facade.Parameters.AddWithValue("@PNr", document.ID);
                             facade.ExecuteNonQuery(FbScripts.SetHandled);
+
+                            facade.CommitWriteTransaction();
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.AddLog(MainMessages.rs_ErrorsInRepository, ex, EventLogEntryType.Error);
+                        }
+
+                    }
+                }
+            }
+        }
+
+        public void SetDocumentUnhandleable(NeuronDocument document)
+        {
+            if ((document != null) && (document.ID > 0))
+            {
+                using (var facade = new FbFacade(true, _dbConfig.ToConnectionString()))
+                {
+                    if (facade.BeginWriteTransaction())
+                    {
+                        try
+                        {
+                            InsertToLog(document, facade, DbLogAction.DocumentUnhandlable);
+
+                            facade.Parameters.Clear();
+                            facade.Parameters.AddWithValue("@PNr", document.ID);
+                            facade.ExecuteNonQuery(FbScripts.SetUnhandlable);
 
                             facade.CommitWriteTransaction();
                         }

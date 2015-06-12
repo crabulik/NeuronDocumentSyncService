@@ -19,7 +19,7 @@ namespace NeuronDocumentSyncService
             Bind<ISyncCore>().To<SyncCore>();
             Bind<IConfigProcessor>().To<ConfigProcessor>().InSingletonScope();
             Bind<FbDbConnectionConfig>().ToSelf().InSingletonScope();
-            Bind<INeuronDocumentProcessor>().To<TestDocumentProcessor>();
+            Bind<INeuronDocumentProcessor>().To<AspNeuronDocumentProcessor>();
             Bind<NeuronRepository>().ToSelf();
             Bind<DocumentConverter>().ToSelf().InSingletonScope();
         }

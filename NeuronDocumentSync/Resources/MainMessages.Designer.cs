@@ -61,6 +61,15 @@ namespace NeuronDocumentSync.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An error was found in AspNeuronDocumentProcessor.
+        /// </summary>
+        public static string rs_AspNeuronDocumentProcessorError {
+            get {
+                return ResourceManager.GetString("rs_AspNeuronDocumentProcessorError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Can not install the service.
         /// </summary>
         public static string rs_CanNotInstallService {
@@ -142,6 +151,33 @@ namespace NeuronDocumentSync.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The document doesn&apos;t have any delivery information.
+        /// </summary>
+        public static string rs_DocumantDoesntHaveAnyDeliveryInformation {
+            get {
+                return ResourceManager.GetString("rs_DocumantDoesntHaveAnyDeliveryInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The document has no data for transfer.
+        /// </summary>
+        public static string rs_DocumentHasNoData {
+            get {
+                return ResourceManager.GetString("rs_DocumentHasNoData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email is not valid.
+        /// </summary>
+        public static string rs_EmailIsNotValid {
+            get {
+                return ResourceManager.GetString("rs_EmailIsNotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error occurred.
         /// </summary>
         public static string rs_ErrorOccurred {
@@ -192,6 +228,24 @@ namespace NeuronDocumentSync.Resources {
         public static string rs_ErrorWhileUninstallingService {
             get {
                 return ResourceManager.GetString("rs_ErrorWhileUninstallingService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File name must be filled.
+        /// </summary>
+        public static string rs_FileNameMustBeFilled {
+            get {
+                return ResourceManager.GetString("rs_FileNameMustBeFilled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phone number is not valid.
+        /// </summary>
+        public static string rs_PhoneNumberIsNotValid {
+            get {
+                return ResourceManager.GetString("rs_PhoneNumberIsNotValid", resourceCulture);
             }
         }
         
@@ -297,6 +351,15 @@ namespace NeuronDocumentSync.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The global error was found durring SyncProcess. Sync step is canceled..
+        /// </summary>
+        public static string rs_SyncNeuronDocumentGlobalError {
+            get {
+                return ResourceManager.GetString("rs_SyncNeuronDocumentGlobalError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Syncronization Process is canceled by user.
         /// </summary>
         public static string rs_SyncNeuronDocumentsCanceled {
@@ -320,6 +383,25 @@ namespace NeuronDocumentSync.Resources {
         public static string rs_SyncNeuronDocumentWasNotProcessed {
             get {
                 return ResourceManager.GetString("rs_SyncNeuronDocumentWasNotProcessed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Validation model errors:.
+        /// </summary>
+        public static string rs_ValidationModelErrors {
+            get {
+                return ResourceManager.GetString("rs_ValidationModelErrors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The document &quot;{0}({1}) Id = {2}&quot; has errors:
+        ///{3}.
+        /// </summary>
+        public static string rs_ValidationModelErrorsLog {
+            get {
+                return ResourceManager.GetString("rs_ValidationModelErrorsLog", resourceCulture);
             }
         }
     }

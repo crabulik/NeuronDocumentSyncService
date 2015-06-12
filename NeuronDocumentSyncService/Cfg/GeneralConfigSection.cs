@@ -45,6 +45,14 @@ namespace NeuronDocumentSyncService.Cfg
             set { this[SyncOperationBreakValueName] = value; }
         }
 
+        private const string WebImportUrlName = "webImportUrl";
+        [ConfigurationProperty(WebImportUrlName, DefaultValue = "", IsRequired = false)]
+        public string WebImportUrl
+        {
+            get { return (string)this[WebImportUrlName]; }
+            set { this[WebImportUrlName] = value; }
+        }
+
         public override bool IsReadOnly()
         {
             return false;

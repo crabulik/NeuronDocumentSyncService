@@ -43,6 +43,7 @@ namespace NeuronDocumentSync.Models
         public bool IsServiceTimeEnable { get; set; }
         public TimeSpan ServiceTimeStart { get; set; }
         public TimeSpan ServiceTimeEnd { get; set; }
+        public string WebImportUrl { get; set; }
 
         public void Load()
         {

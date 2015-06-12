@@ -206,4 +206,32 @@ The InternalError is found.</value>
   <data name="rs_SyncNeuronDocumentWasNotProcessed" xml:space="preserve">
     <value>The document "{0}({1}) Id = {2}" was not processed by the service</value>
   </data>
+  <data name="rs_SyncNeuronDocumentGlobalError" xml:space="preserve">
+    <value>The global error was found durring SyncProcess. Sync step is canceled.</value>
+  </data>
+  <data name="rs_AspNeuronDocumentProcessorError" xml:space="preserve">
+    <value>An error was found in AspNeuronDocumentProcessor</value>
+  </data>
+  <data name="rs_EmailIsNotValid" xml:space="preserve">
+    <value>Email is not valid</value>
+  </data>
+  <data name="rs_FileNameMustBeFilled" xml:space="preserve">
+    <value>File name must be filled</value>
+  </data>
+  <data name="rs_PhoneNumberIsNotValid" xml:space="preserve">
+    <value>Phone number is not valid</value>
+  </data>
+  <data name="rs_DocumantDoesntHaveAnyDeliveryInformation" xml:space="preserve">
+    <value>The document doesn't have any delivery information</value>
+  </data>
+  <data name="rs_DocumentHasNoData" xml:space="preserve">
+    <value>The document has no data for transfer</value>
+  </data>
+  <data name="rs_ValidationModelErrors" xml:space="preserve">
+    <value>Validation model errors:</value>
+  </data>
+  <data name="rs_ValidationModelErrorsLog" xml:space="preserve">
+    <value>The document "{0}({1}) Id = {2}" has errors:
+{3}</value>
+  </data>
 </root>

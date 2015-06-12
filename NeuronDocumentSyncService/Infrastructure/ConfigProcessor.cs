@@ -64,6 +64,9 @@ namespace NeuronDocumentSyncService.Infrastructure
                     if (genSettings.TempDirectoryPath != "")
                         cfg.TempDirectoryPath = genSettings.TempDirectoryPath;
 
+                    if (genSettings.WebImportUrl != "")
+                        cfg.WebImportUrl = genSettings.WebImportUrl;
+
                     if(genSettings.SyncOperationBreakValue > 0)
                         cfg.SyncOperationBreakValue = genSettings.SyncOperationBreakValue;
 
@@ -122,6 +125,7 @@ namespace NeuronDocumentSyncService.Infrastructure
             genSettings.ServiceTimeStart = cfg.ServiceTimeStart;
             genSettings.ServiceTimeEnd = cfg.ServiceTimeEnd;
             genSettings.SyncOperationBreakValue = cfg.SyncOperationBreakValue;
+            genSettings.WebImportUrl = cfg.WebImportUrl;
             
             ConfigurationManager.RefreshSection(_generalSectionName);
             currentConfig.Save(ConfigurationSaveMode.Full);

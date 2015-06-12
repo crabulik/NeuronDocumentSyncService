@@ -1,9 +1,11 @@
-﻿using NeuronDocumentSync.Models;
+﻿using System.Collections.Generic;
+using NeuronDocumentSync.Enums;
+using NeuronDocumentSync.Models;
 
 namespace NeuronDocumentSync.Interfaces
 {
     public interface INeuronDocumentProcessor
     {
-        bool ProcessDocument(NeuronDocument document);
+        NeuronDocumentProcessorResult ProcessDocument(NeuronDocument document);
     }
 }
