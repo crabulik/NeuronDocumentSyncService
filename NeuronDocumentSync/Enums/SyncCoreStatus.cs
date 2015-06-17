@@ -5,6 +5,7 @@
         Stopped,
         Started,
         SyncStep,
+        PublishStep,
         BreakUp,
         Error
     }

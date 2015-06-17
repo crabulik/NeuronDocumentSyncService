@@ -70,6 +70,15 @@ namespace NeuronDocumentSync.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An error was found  in AspNeuronDocumentProcessor during Publish process.
+        /// </summary>
+        public static string rs_AspNeuronDocumentPublisherError {
+            get {
+                return ResourceManager.GetString("rs_AspNeuronDocumentPublisherError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Can not install the service.
         /// </summary>
         public static string rs_CanNotInstallService {
@@ -165,6 +174,24 @@ namespace NeuronDocumentSync.Resources {
         public static string rs_DocumentHasNoData {
             get {
                 return ResourceManager.GetString("rs_DocumentHasNoData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The global error was found durring Publish process..
+        /// </summary>
+        public static string rs_DocumentsPublishingGlobalError {
+            get {
+                return ResourceManager.GetString("rs_DocumentsPublishingGlobalError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Access keys were sended to users.
+        /// </summary>
+        public static string rs_DocumentsPublishingSuccess {
+            get {
+                return ResourceManager.GetString("rs_DocumentsPublishingSuccess", resourceCulture);
             }
         }
         

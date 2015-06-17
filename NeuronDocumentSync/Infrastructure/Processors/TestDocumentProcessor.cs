@@ -11,7 +11,7 @@ using NeuronDocumentSync.Models;
 
 namespace NeuronDocumentSync.Infrastructure.Processors
 {
-    public class TestDocumentProcessor: INeuronDocumentProcessor
+    public class TestDocumentProcessor//: INeuronDocumentProcessor
     {
         private readonly string _exportDirectory = @"I:\Test";
         private readonly DocumentConverter _converter;

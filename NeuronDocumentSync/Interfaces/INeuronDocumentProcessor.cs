@@ -7,5 +7,7 @@ namespace NeuronDocumentSync.Interfaces
     public interface INeuronDocumentProcessor
     {
         NeuronDocumentProcessorResult ProcessDocument(NeuronDocument document);
+
+        NeuronDocumentProcessorResult PublishDocuments();
     }
 }

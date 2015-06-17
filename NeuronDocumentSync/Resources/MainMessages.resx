@@ -234,4 +234,13 @@ The InternalError is found.</value>
     <value>The document "{0}({1}) Id = {2}" has errors:
 {3}</value>
   </data>
+  <data name="rs_AspNeuronDocumentPublisherError" xml:space="preserve">
+    <value>An error was found  in AspNeuronDocumentProcessor during Publish process</value>
+  </data>
+  <data name="rs_DocumentsPublishingGlobalError" xml:space="preserve">
+    <value>The global error was found durring Publish process.</value>
+  </data>
+  <data name="rs_DocumentsPublishingSuccess" xml:space="preserve">
+    <value>Access keys were sended to users</value>
+  </data>
 </root>

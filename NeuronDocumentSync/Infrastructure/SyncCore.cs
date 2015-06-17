@@ -38,6 +38,8 @@ namespace NeuronDocumentSync.Infrastructure
         private bool _isServiceTimeEnable = false;
         private TimeSpan _serviceTimeStart = new TimeSpan(0);
         private TimeSpan _serviceTimeEnd = new TimeSpan(0);
+        // ToDo: Change it value to some ratio
+        private const int PublishingRatio = 1;
 
         private void InitializeWorker()
         {
@@ -109,6 +111,30 @@ namespace NeuronDocumentSync.Infrastructure
             }
         }
 
+        private void PublishNeuronDocuments()
+        {
+            SetStatus(SyncCoreStatus.PublishStep);
+
+            switch (_processor.PublishDocuments())
+            {
+                case NeuronDocumentProcessorResult.Success:
+                    _logger.AddLog(MainMessages.rs_DocumentsPublishingSuccess);
+                    break;
+                case NeuronDocumentProcessorResult.Fail:
+                    {
+                        
+                        break;
+                    }
+                case NeuronDocumentProcessorResult.Error:
+                    {
+                        _logger.AddLog(MainMessages.rs_DocumentsPublishingGlobalError);
+                        return;
+                    }
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+        }
         private bool ValidateDocument(NeuronDocument document)
         {
             var context = new ValidationContext(document, null, null);
@@ -140,12 +166,24 @@ namespace NeuronDocumentSync.Infrastructure
         private void WorkerOnDoWork(object sender, DoWorkEventArgs doWorkEventArgs)
         {
             SetStatus(SyncCoreStatus.Started);
+            var publishSkip = 0;
             while (true)
-            {
+            {              
                 if (CheckServiceTime())
                 {                    
                     if (_worker.CancellationPending) break;
                     SyncNeuronDocuments();
+
+                    if (publishSkip == PublishingRatio)
+                    {
+                        publishSkip = 0;
+                        if (_worker.CancellationPending) break;
+                        PublishNeuronDocuments();
+                    }
+                    else
+                    {
+                        publishSkip ++;
+                    }
                 }
                 if (_worker.CancellationPending) break;
                 EngageBrake();
@@ -238,7 +276,8 @@ namespace NeuronDocumentSync.Infrastructure
                     break;
                 case SyncCoreStatus.Stopped:
                 case SyncCoreStatus.Started:           
-                case SyncCoreStatus.BreakUp:
+                case SyncCoreStatus.BreakUp:           
+                case SyncCoreStatus.PublishStep:
                     info = new ServiceStatusInfoArgs(state);
                     break;
                 case SyncCoreStatus.Error:

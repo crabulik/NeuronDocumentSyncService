@@ -38,7 +38,7 @@ namespace NeuronDocumentSync.Infrastructure.Processors
             var exportDoc = _converter.Convert(document);
             if (exportDoc != null)
             {
-                var result = SendToWebApiTest(exportDoc);
+                var result = SendDocumentToWebApi(exportDoc);
                 result.Wait();
                 document.Errors += result.Result.ErrorMessage;
                 return result.Result.Result;
@@ -47,7 +47,56 @@ namespace NeuronDocumentSync.Infrastructure.Processors
             return NeuronDocumentProcessorResult.Fail;
         }
 
-        private async Task<WebApiSendResult> SendToWebApiTest(ExportServiceDocument document)
+        public NeuronDocumentProcessorResult PublishDocuments()
+        {
+            var result = PublishDocumentsByWebApi();
+            result.Wait();
+            return result.Result.Result;
+        }
+
+        private async Task<WebApiSendResult> PublishDocumentsByWebApi()
+        {
+            var result = new WebApiSendResult();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(_cfg.WebImportUrl);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response;
+                try
+                {
+                    response = await client.GetAsync("api/documentpublisher");
+                }
+                catch (Exception ex)
+                {
+                    _logger.AddLog(MainMessages.rs_AspNeuronDocumentPublisherError, ex, EventLogEntryType.Error);
+                    result.ErrorMessage = MainMessages.rs_AspNeuronDocumentPublisherError;
+                    result.Result = NeuronDocumentProcessorResult.Error;
+                    return result;
+                }
+
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var sended = await response.Content.ReadAsAsync<bool>();
+                    result.Result = sended ? NeuronDocumentProcessorResult.Success : NeuronDocumentProcessorResult.Fail;
+                }
+                else
+                {
+                    result.Result = NeuronDocumentProcessorResult.Fail;
+                    result.ErrorMessage = response.ReasonPhrase;
+                    result.ErrorMessage = Environment.NewLine +
+                        await response.Content.ReadAsStringAsync();
+                    _logger.AddLog(MainMessages.rs_AspNeuronDocumentPublisherError +Environment.NewLine +
+                        result.ErrorMessage);
+                }
+            }
+
+            return result;
+        }
+
+        private async Task<WebApiSendResult> SendDocumentToWebApi(ExportServiceDocument document)
         {
             var result = new WebApiSendResult();
             using (var client = new HttpClient())
