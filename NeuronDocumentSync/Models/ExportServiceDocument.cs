@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Drawing;
-using NeuronDocumentSync.Enums;
-using NeuronDocumentSync.Resources;
 
 namespace NeuronDocumentSync.Models
 {
@@ -22,6 +18,9 @@ namespace NeuronDocumentSync.Models
         public List<ExportedImage> ImagesInterpretation { get; set; }
 
         public byte[] PdfFileData { get; set; }
+        public byte[] ImageData { get; set; }
+        public bool IsImagesInZip { get; set; }
+        
 
         public ExportServiceDocument()
         {

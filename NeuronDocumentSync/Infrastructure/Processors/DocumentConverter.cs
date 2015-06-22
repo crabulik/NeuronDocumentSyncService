@@ -37,6 +37,8 @@ namespace NeuronDocumentSync.Infrastructure.Processors
 
             byte[] tmpPdf = null;
             var tmpImageList = new List<ExportedImage>();
+            byte[] imageData = null;
+            bool isImagesInZip = false;
 
             switch (doc.DocumentType)
             {
@@ -53,6 +55,8 @@ namespace NeuronDocumentSync.Infrastructure.Processors
                         if (doc.DocumentData != null)
                         {
                             tmpImageList.Add(GetImageFromArray(doc.DocumentData, doc.FileName));
+                            imageData = doc.DocumentData;
+                            isImagesInZip = false;
                         }
                         break;
                     }
@@ -61,6 +65,8 @@ namespace NeuronDocumentSync.Infrastructure.Processors
                         if (doc.DocumentAdditionalData != null)
                         {
                             tmpImageList.Add(GetImageFromArray(doc.DocumentAdditionalData, Path.ChangeExtension(doc.FileName, "png")));
+                            imageData = doc.DocumentAdditionalData;
+                            isImagesInZip = false;
                         }
                         if (doc.DocumentData != null)
                         {
@@ -73,6 +79,8 @@ namespace NeuronDocumentSync.Infrastructure.Processors
                         if (doc.DocumentData != null)
                         {
                             tmpImageList.AddRange(GetImagesFromZip(doc.DocumentData));
+                            imageData = doc.DocumentData;
+                            isImagesInZip = true;
                         }
                         break;
                     }
@@ -81,6 +89,8 @@ namespace NeuronDocumentSync.Infrastructure.Processors
                         if (doc.DocumentAdditionalData != null)
                         {
                             tmpImageList.AddRange(GetImagesFromZip(doc.DocumentAdditionalData));
+                            imageData = doc.DocumentAdditionalData;
+                            isImagesInZip = true;
                         }
                         if (doc.DocumentData != null)
                         {
@@ -103,7 +113,9 @@ namespace NeuronDocumentSync.Infrastructure.Processors
                 Name = doc.Name,
                 NeuronDbDocumentId = doc.ID,
                 PdfFileData = tmpPdf,
-                ImagesInterpretation = tmpImageList
+                ImagesInterpretation = tmpImageList,
+                IsImagesInZip = isImagesInZip,
+                ImageData = imageData
             });
         }
 
