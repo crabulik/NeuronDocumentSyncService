@@ -78,6 +78,7 @@ namespace NeuronDocumentSync.Infrastructure
                                 _logger.AddLog(string.Format(MainMessages.rs_SyncNeuronDocumentWasNotProcessed,
                                     document.Name, document.CreatDate, document.ID));
                                 _repository.LogDocumentError(document);
+                                _repository.SetDocumentUnhandleable(document);
                                 break;
                             }
                             case NeuronDocumentProcessorResult.Error:
