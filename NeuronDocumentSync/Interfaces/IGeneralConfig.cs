@@ -17,6 +17,10 @@ namespace NeuronDocumentSync.Interfaces
 
         string WebImportUrl { get; set; }
 
+        string WebImportLogin { get; set; }
+
+        string WebImportPass { get; set; }
+
         void Load();
 
         bool Save();

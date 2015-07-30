@@ -53,6 +53,22 @@ namespace NeuronDocumentSyncService.Cfg
             set { this[WebImportUrlName] = value; }
         }
 
+        private const string WebImportLoginName = "webImportLogin";
+        [ConfigurationProperty(WebImportLoginName, DefaultValue = "", IsRequired = false)]
+        public string WebImportLogin
+        {
+            get { return (string)this[WebImportLoginName]; }
+            set { this[WebImportLoginName] = value; }
+        }
+
+        private const string WebImportPassName = "webImportPass";
+        [ConfigurationProperty(WebImportPassName, DefaultValue = "", IsRequired = false)]
+        public string WebImportPass
+        {
+            get { return (string)this[WebImportPassName]; }
+            set { this[WebImportPassName] = value; }
+        }
+
         public override bool IsReadOnly()
         {
             return false;

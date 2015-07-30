@@ -286,6 +286,24 @@ namespace NeuronDocumentSync.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Process Document process is interrupted..
+        /// </summary>
+        public static string rs_ProcessDocumentInterrupted {
+            get {
+                return ResourceManager.GetString("rs_ProcessDocumentInterrupted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Publish Documents process is interrupted..
+        /// </summary>
+        public static string rs_PublishDocumentsInterrupted {
+            get {
+                return ResourceManager.GetString("rs_PublishDocumentsInterrupted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The server has an enternal error. The service will be stopped.
         /// </summary>
         public static string rs_ServerErrorServiceWillBeStopped {
@@ -429,6 +447,15 @@ namespace NeuronDocumentSync.Resources {
         public static string rs_ValidationModelErrorsLog {
             get {
                 return ResourceManager.GetString("rs_ValidationModelErrorsLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Can&apos;t connect to remote Neuron Service. The login or the pass is incorrect. Please, check the config file..
+        /// </summary>
+        public static string rs_WebApiLoginOrPassError {
+            get {
+                return ResourceManager.GetString("rs_WebApiLoginOrPassError", resourceCulture);
             }
         }
     }

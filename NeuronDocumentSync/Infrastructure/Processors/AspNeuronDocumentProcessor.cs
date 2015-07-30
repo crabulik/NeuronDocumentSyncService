@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.Caching;
 using System.Threading.Tasks;
 using NeuronDocumentSync.Enums;
 using NeuronDocumentSync.Interfaces;
 using NeuronDocumentSync.Models;
 using NeuronDocumentSync.Resources;
+using Newtonsoft.Json;
 
 namespace NeuronDocumentSync.Infrastructure.Processors
 {
@@ -21,17 +24,31 @@ namespace NeuronDocumentSync.Infrastructure.Processors
 
     public class AspNeuronDocumentProcessor : INeuronDocumentProcessor
     {
+        private const string BearerValue = "Bearer";
+        private const string PublishUrl = "api/documentpublisher";
+        private const string ImportUrl = "api/import";
+        private const string TokenUrl = "Token";
+        private const string GrantTypeParamName = "grant_type";
+        private const string GrantTypeParamValue = "password";
+        private const string UserNameParamName = "username";
+        private const string PasswordParamName = "Password";
+        private const string AccessTokenParamName = "access_token";
+        private const string CacheTokenName = "AspNeuronDocumentProcessorToken";
+        private const double CachedTokenLifeTimeMinutes = 300;
         
+
 
         private readonly DocumentConverter _converter;
         private readonly IGeneralConfig _cfg;
         private readonly INeuronLogger _logger;
+        private MemoryCache Cache { get; set; }
 
         public AspNeuronDocumentProcessor(DocumentConverter converter, IGeneralConfig cfg, INeuronLogger logger)
         {
             _converter = converter;
             _cfg = cfg;
             _logger = logger;
+            Cache = MemoryCache.Default;
         }
         public NeuronDocumentProcessorResult ProcessDocument(NeuronDocument document)
         {
@@ -57,7 +74,13 @@ namespace NeuronDocumentSync.Infrastructure.Processors
         private async Task<WebApiSendResult> PublishDocumentsByWebApi()
         {
             var result = new WebApiSendResult();
-            using (var client = new HttpClient())
+            var token = GetToken();
+            if (token == null)
+            {
+                result.Result = NeuronDocumentProcessorResult.PassOrLoginError;
+                return result;
+            }
+            using (var client = CreateClient(token))
             {
                 client.BaseAddress = new Uri(_cfg.WebImportUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
@@ -66,7 +89,7 @@ namespace NeuronDocumentSync.Infrastructure.Processors
                 HttpResponseMessage response;
                 try
                 {
-                    response = await client.GetAsync("api/documentpublisher");
+                    response = await client.GetAsync(PublishUrl);
                 }
                 catch (Exception ex)
                 {
@@ -79,6 +102,7 @@ namespace NeuronDocumentSync.Infrastructure.Processors
 
                 if (response.IsSuccessStatusCode)
                 {
+                    //response.Content.Headers.ContentType
                     var sended = await response.Content.ReadAsAsync<bool>();
                     result.Result = sended ? NeuronDocumentProcessorResult.Success : NeuronDocumentProcessorResult.Fail;
                 }
@@ -99,7 +123,13 @@ namespace NeuronDocumentSync.Infrastructure.Processors
         private async Task<WebApiSendResult> SendDocumentToWebApi(ExportServiceDocument document)
         {
             var result = new WebApiSendResult();
-            using (var client = new HttpClient())
+            var token = GetToken();
+            if (token == null)
+            {
+                result.Result = NeuronDocumentProcessorResult.PassOrLoginError;
+                return result;
+            }
+            using (var client = CreateClient(token))
             {
                 client.BaseAddress = new Uri(_cfg.WebImportUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
@@ -108,7 +138,7 @@ namespace NeuronDocumentSync.Infrastructure.Processors
                 HttpResponseMessage response;
                 try
                 {
-                    response = await client.PostAsJsonAsync("api/import", document);
+                    response = await client.PostAsJsonAsync(ImportUrl, document);
                 }
                 catch (Exception ex)
                 {
@@ -142,6 +172,64 @@ namespace NeuronDocumentSync.Infrastructure.Processors
             }
 
             return result;
+        }
+
+        private Dictionary<string, string> GetTokenDictionary(string userName, string password)
+        {
+            var pairs = new List<KeyValuePair<string, string>>
+                {
+                    new KeyValuePair<string, string>( GrantTypeParamName, GrantTypeParamValue ), 
+                    new KeyValuePair<string, string>( UserNameParamName, userName ), 
+                    new KeyValuePair<string, string> ( PasswordParamName, password )
+                };
+            var content = new FormUrlEncodedContent(pairs);
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(_cfg.WebImportUrl);
+                var response =
+                    client.PostAsync(TokenUrl, content).Result;
+                if(!response.IsSuccessStatusCode)
+                    return null;
+                var result = response.Content.ReadAsStringAsync().Result;
+                // Десериализация полученного JSON-объекта
+                Dictionary<string, string> tokenDictionary =
+                    JsonConvert.DeserializeObject<Dictionary<string, string>>(result);
+                return tokenDictionary;
+            }
+        }
+
+        private string GetToken()
+        {
+            string accessToken;
+            var cached = Cache[CacheTokenName];
+            if (cached != null)
+            {
+                accessToken = ((string)cached);
+            }
+            else
+            {
+                var tokenDictionary = GetTokenDictionary(_cfg.WebImportLogin, _cfg.WebImportPass);
+                if (tokenDictionary == null)
+                    return null;
+                accessToken = tokenDictionary[AccessTokenParamName];
+                Cache.Set(CacheTokenName, accessToken,
+                    DateTimeOffset.Now.AddMinutes(CachedTokenLifeTimeMinutes));
+            }
+
+            return accessToken;
+        }
+
+        // создаем http-клиента с токеном 
+        private HttpClient CreateClient(string accessToken = "")
+        {
+            var client = new HttpClient();
+            if (!string.IsNullOrWhiteSpace(accessToken))
+            {
+                client.DefaultRequestHeaders.Authorization =
+                    new System.Net.Http.Headers.AuthenticationHeaderValue(BearerValue, accessToken);
+            }
+            return client;
         }
     }
 }

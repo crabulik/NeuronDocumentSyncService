@@ -67,6 +67,12 @@ namespace NeuronDocumentSyncService.Infrastructure
                     if (genSettings.WebImportUrl != "")
                         cfg.WebImportUrl = genSettings.WebImportUrl;
 
+                    if (genSettings.WebImportLogin != "")
+                        cfg.WebImportLogin = genSettings.WebImportLogin;
+
+                    if (genSettings.WebImportPass != "")
+                        cfg.WebImportPass = genSettings.WebImportPass;
+
                     if(genSettings.SyncOperationBreakValue > 0)
                         cfg.SyncOperationBreakValue = genSettings.SyncOperationBreakValue;
 

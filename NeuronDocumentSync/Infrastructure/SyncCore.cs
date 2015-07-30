@@ -88,6 +88,11 @@ namespace NeuronDocumentSync.Infrastructure
                                 _repository.LogDocumentError(document);
                                 return;
                             }
+                            case NeuronDocumentProcessorResult.PassOrLoginError:
+                            {
+                                _logger.AddLog(MainMessages.rs_ProcessDocumentInterrupted + " " + MainMessages.rs_WebApiLoginOrPassError);
+                                return;
+                            }
                             default:
                                 throw new ArgumentOutOfRangeException();
                         }
@@ -129,6 +134,11 @@ namespace NeuronDocumentSync.Infrastructure
                 case NeuronDocumentProcessorResult.Error:
                     {
                         _logger.AddLog(MainMessages.rs_DocumentsPublishingGlobalError);
+                        return;
+                    }
+                case NeuronDocumentProcessorResult.PassOrLoginError:
+                    {
+                        _logger.AddLog(MainMessages.rs_PublishDocumentsInterrupted + " " + MainMessages.rs_WebApiLoginOrPassError);
                         return;
                     }
                 default:

@@ -243,4 +243,13 @@ The InternalError is found.</value>
   <data name="rs_DocumentsPublishingSuccess" xml:space="preserve">
     <value>Access keys were sended to users</value>
   </data>
+  <data name="rs_ProcessDocumentInterrupted" xml:space="preserve">
+    <value>The Process Document process is interrupted.</value>
+  </data>
+  <data name="rs_PublishDocumentsInterrupted" xml:space="preserve">
+    <value>The Publish Documents process is interrupted.</value>
+  </data>
+  <data name="rs_WebApiLoginOrPassError" xml:space="preserve">
+    <value>Can't connect to remote Neuron Service. The login or the pass is incorrect. Please, check the config file.</value>
+  </data>
 </root>

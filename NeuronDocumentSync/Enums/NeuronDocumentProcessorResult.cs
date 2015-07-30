@@ -4,6 +4,7 @@
     {
         Success,
         Fail,
-        Error
+        Error,
+        PassOrLoginError
     }
 }

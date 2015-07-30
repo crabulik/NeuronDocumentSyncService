@@ -44,6 +44,9 @@ namespace NeuronDocumentSync.Models
         public TimeSpan ServiceTimeStart { get; set; }
         public TimeSpan ServiceTimeEnd { get; set; }
         public string WebImportUrl { get; set; }
+        public string WebImportLogin { get; set; }
+        public string WebImportPass { get; set; }
+
 
         public void Load()
         {
