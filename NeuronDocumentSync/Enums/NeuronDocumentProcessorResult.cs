@@ -5,6 +5,7 @@
         Success,
         Fail,
         Error,
-        PassOrLoginError
+        PassOrLoginError,
+        GetPublicKeyError
     }
 }

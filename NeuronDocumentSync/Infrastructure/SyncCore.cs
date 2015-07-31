@@ -93,6 +93,11 @@ namespace NeuronDocumentSync.Infrastructure
                                 _logger.AddLog(MainMessages.rs_ProcessDocumentInterrupted + " " + MainMessages.rs_WebApiLoginOrPassError);
                                 return;
                             }
+                            case NeuronDocumentProcessorResult.GetPublicKeyError:
+                            {
+                                _logger.AddLog(MainMessages.rs_ProcessDocumentInterrupted + " " + MainMessages.rs_WebApiPublicCypherKeyError);
+                                return;
+                            }
                             default:
                                 throw new ArgumentOutOfRangeException();
                         }
@@ -139,6 +144,11 @@ namespace NeuronDocumentSync.Infrastructure
                 case NeuronDocumentProcessorResult.PassOrLoginError:
                     {
                         _logger.AddLog(MainMessages.rs_PublishDocumentsInterrupted + " " + MainMessages.rs_WebApiLoginOrPassError);
+                        return;
+                    }
+                case NeuronDocumentProcessorResult.GetPublicKeyError:
+                    {
+                        _logger.AddLog(MainMessages.rs_PublishDocumentsInterrupted + " " + MainMessages.rs_WebApiPublicCypherKeyError);
                         return;
                     }
                 default:

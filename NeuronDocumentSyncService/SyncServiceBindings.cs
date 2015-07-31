@@ -1,4 +1,5 @@
 ﻿using System.ServiceProcess;
+using NeuronDocumentSync.Cypher;
 using NeuronDocumentSync.Infrastructure;
 using NeuronDocumentSync.Infrastructure.Processors;
 using NeuronDocumentSync.Interfaces;
@@ -20,6 +21,7 @@ namespace NeuronDocumentSyncService
             Bind<IConfigProcessor>().To<ConfigProcessor>().InSingletonScope();
             Bind<FbDbConnectionConfig>().ToSelf().InSingletonScope();
             Bind<INeuronDocumentProcessor>().To<AspNeuronDocumentProcessor>();
+            Bind<IRSACypher>().To<RSACypher>();
             Bind<NeuronRepository>().ToSelf();
             Bind<DocumentConverter>().ToSelf().InSingletonScope();
         }

@@ -252,4 +252,13 @@ The InternalError is found.</value>
   <data name="rs_WebApiLoginOrPassError" xml:space="preserve">
     <value>Can't connect to remote Neuron Service. The login or the pass is incorrect. Please, check the config file.</value>
   </data>
+  <data name="rs_GetPublicCypherKeyError" xml:space="preserve">
+    <value>An error was found in GetPublicCypherKeyError</value>
+  </data>
+  <data name="rs_GetPublicCypherKeyErrorErrorStatusCode" xml:space="preserve">
+    <value>An error was found in GetPublicCypherKeyError. The Service returned Error status code</value>
+  </data>
+  <data name="rs_WebApiPublicCypherKeyError" xml:space="preserve">
+    <value>Can't get a Public Cypher Key. Please, restart service.</value>
+  </data>
 </root>

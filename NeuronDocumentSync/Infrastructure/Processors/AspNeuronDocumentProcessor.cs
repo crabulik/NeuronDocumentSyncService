@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.Caching;
 using System.Threading.Tasks;
+using NeuronDocumentSync.Cypher;
 using NeuronDocumentSync.Enums;
 using NeuronDocumentSync.Interfaces;
 using NeuronDocumentSync.Models;
@@ -27,6 +28,9 @@ namespace NeuronDocumentSync.Infrastructure.Processors
         private const string BearerValue = "Bearer";
         private const string PublishUrl = "api/documentpublisher";
         private const string ImportUrl = "api/import";
+        private const string GetPublicCypherKeyUrl = "api/import/GetPublicKey";
+        private const string CachePublicCypherKeyName = "PublicCypherKeyCache";
+        private const double CachedPublicCypherKeyLifeTimeMinutes = 30;
         private const string TokenUrl = "Token";
         private const string GrantTypeParamName = "grant_type";
         private const string GrantTypeParamValue = "password";
@@ -42,13 +46,16 @@ namespace NeuronDocumentSync.Infrastructure.Processors
         private readonly IGeneralConfig _cfg;
         private readonly INeuronLogger _logger;
         private MemoryCache Cache { get; set; }
+        private IRSACypher Cypher { get; set; }
 
-        public AspNeuronDocumentProcessor(DocumentConverter converter, IGeneralConfig cfg, INeuronLogger logger)
+        public AspNeuronDocumentProcessor(DocumentConverter converter, IGeneralConfig cfg, INeuronLogger logger,
+            IRSACypher cypher)
         {
             _converter = converter;
             _cfg = cfg;
             _logger = logger;
             Cache = MemoryCache.Default;
+            Cypher = cypher;
         }
         public NeuronDocumentProcessorResult ProcessDocument(NeuronDocument document)
         {
@@ -120,6 +127,49 @@ namespace NeuronDocumentSync.Infrastructure.Processors
             return result;
         }
 
+        private async Task<string> GetPublicCypherKey(HttpClient client)
+        {
+            var cached = Cache[CachePublicCypherKeyName];
+            if (cached != null)
+            {
+                return ((string)cached);
+            }
+            else
+            {
+
+                HttpResponseMessage response;
+                try
+                {
+                    response = await client.GetAsync(GetPublicCypherKeyUrl);
+                }
+                catch (Exception ex)
+                {
+                    _logger.AddLog(MainMessages.rs_GetPublicCypherKeyError, ex, EventLogEntryType.Error);
+
+                    return null;
+                }
+                if (response.IsSuccessStatusCode)
+                {
+                    var key = await response.Content.ReadAsStringAsync();
+                    
+                    Cache.Set(CachePublicCypherKeyName, key,
+                        DateTimeOffset.Now.AddMinutes(CachedPublicCypherKeyLifeTimeMinutes));
+
+                    return key;
+                }
+                else
+                {
+                    _logger.AddLog(MainMessages.rs_GetPublicCypherKeyErrorErrorStatusCode, null, EventLogEntryType.Warning);
+                }
+            }
+
+
+            
+            return null;
+        }
+
+        
+
         private async Task<WebApiSendResult> SendDocumentToWebApi(ExportServiceDocument document)
         {
             var result = new WebApiSendResult();
@@ -132,13 +182,21 @@ namespace NeuronDocumentSync.Infrastructure.Processors
             using (var client = CreateClient(token))
             {
                 client.BaseAddress = new Uri(_cfg.WebImportUrl);
+                var publicCypherKey = await GetPublicCypherKey(client);
+                if (publicCypherKey == null)
+                {
+                    result.Result = NeuronDocumentProcessorResult.GetPublicKeyError;
+                    return result;
+                }
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 HttpResponseMessage response;
                 try
                 {
-                    response = await client.PostAsJsonAsync(ImportUrl, document);
+                    var docCypheredData = Cypher.EncryptAndSerializeData(document, publicCypherKey);
+
+                    response = await client.PostAsJsonAsync(ImportUrl, new CypheredDocument(docCypheredData));
                 }
                 catch (Exception ex)
                 {

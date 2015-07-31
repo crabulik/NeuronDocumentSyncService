@@ -268,6 +268,24 @@ namespace NeuronDocumentSync.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An error was found in GetPublicCypherKeyError.
+        /// </summary>
+        public static string rs_GetPublicCypherKeyError {
+            get {
+                return ResourceManager.GetString("rs_GetPublicCypherKeyError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error was found in GetPublicCypherKeyError. The Service returned Error status code.
+        /// </summary>
+        public static string rs_GetPublicCypherKeyErrorErrorStatusCode {
+            get {
+                return ResourceManager.GetString("rs_GetPublicCypherKeyErrorErrorStatusCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Phone number is not valid.
         /// </summary>
         public static string rs_PhoneNumberIsNotValid {
@@ -456,6 +474,15 @@ namespace NeuronDocumentSync.Resources {
         public static string rs_WebApiLoginOrPassError {
             get {
                 return ResourceManager.GetString("rs_WebApiLoginOrPassError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Can&apos;t get a Public Cypher Key. Please, restart service..
+        /// </summary>
+        public static string rs_WebApiPublicCypherKeyError {
+            get {
+                return ResourceManager.GetString("rs_WebApiPublicCypherKeyError", resourceCulture);
             }
         }
     }

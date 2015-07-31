@@ -61,6 +61,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cypher\IRSACypher.cs" />
+    <Compile Include="Cypher\RSACypher.cs" />
     <Compile Include="Enums\DbLogAction.cs" />
     <Compile Include="Enums\ExportDocumentsType.cs" />
     <Compile Include="Enums\LoggerType.cs" />
@@ -85,6 +87,7 @@
     <Compile Include="Interfaces\INeuronDocumentProcessor.cs" />
     <Compile Include="Interfaces\INeuronLogger.cs" />
     <Compile Include="Interfaces\ISyncCore.cs" />
+    <Compile Include="Models\CypheredDocument.cs" />
     <Compile Include="Models\ExportServiceDocument.cs" />
     <Compile Include="Models\FbDbConnectionConfig.cs" />
     <Compile Include="Models\GeneralConfig.cs" />
